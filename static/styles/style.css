@@ -1,0 +1,143 @@
+.card-header {
+    color: white;
+}
+
+.right-text {
+    padding-top: 10px;
+    text-align: right;
+}
+
+#main_content {
+    background-image: url("http://2ontwz3v85ax465ast18bsyw.wpengine.netdna-cdn.com/wp-content/uploads/2015/09/o-BOOK-COFFEE-facebook-1024x512-740x480.jpg");
+    background-size: cover;
+}
+
+.login {
+    padding: 100px 0px;
+}
+
+#text-main-page {
+    color: whitesmoke;
+    text-align: right;
+}
+
+.content {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.search_content {
+    padding-top: 40px;
+}
+
+#search_text {
+    padding: 20px;
+}
+
+.mid-content {
+    margin-top: 50px;
+    margin-bottom: 80px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.mid-content i {
+    font-size: 200px;
+} 
+ 
+.indv-mid-content {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.font-icons {
+    text-align: center;
+}
+
+.mid-content-banner {
+    display: flex;
+    align-items: center;
+}
+
+.mid-content .indv-mid-content:nth-child(odd) {
+    background-color: #edeff2;
+}
+
+.font-text h2 {
+    border-bottom: 1px solid grey;
+}
+
+footer {
+    padding: 2px;
+    background-color: black;
+    text-align: center;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#heart {
+    color: red;
+    font-size: 25px;
+}
+
+footer a:hover {
+    text-decoration: none;
+}
+
+#write_reviews {
+    margin-bottom: 70px;
+}
+
+#read_reviews {
+    margin-bottom: 70px;
+}
+
+#read_reviews i {
+    font-size: 30px;
+}
+
+#write_reviews i {
+    font-size: 30px;
+}
+
+.login_content {
+    margin-top: 80px;
+    margin-bottom: 105px;
+}
+
+#tableData {
+    margin-bottom: 80px;
+}
+
+#navText {
+    margin-right: 15px;
+    color: white;
+}
+
+#review_heading {
+    padding: 10px;
+    padding-bottom: 0px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid grey;
+}
+
+#review_emoticon, #review_text {
+    padding: 0px 15px;
+}
+
+#review_emoticon i {
+    padding: 0px 5px 0px 5px;
+}
+
+#read_reviews a {
+    color: white;
+    text-decoration: none;
+}
+
+.required label:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}

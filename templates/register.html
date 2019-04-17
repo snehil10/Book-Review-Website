@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href=" {{ url_for('index') }} ">Book Review</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href=" {{ url_for('index') }} ">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href=" {{ url_for('login') }} ">Log In</a>
+                <a class="nav-item nav-link" target="_blank" href="https://snehil10.github.io/">About</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container content">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Create an Account,</h2>
+                <h4>to know more about your favorite books and start posting reviews.</h4>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-primary">Sign Up Here</div>
+                    <div class="card-body">
+                        <form action="{{ url_for('registerUser') }}" method="POST">
+                            <div class="row">
+                                <div class="form-group col-sm-6 required">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter your first name" required>
+                                </div>
+                                <div class="form-group col-sm-6 required">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter your last name" required>
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label for="email">E-mail</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email id" required>
+                            </div>
+                            <div class="form-group required">
+                                <label for="pwd">Password</label>
+                                <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Enter a password" required>
+                            </div>
+                            <div class="form-group required">
+                                <label for="cnfpwd">Confirm Password</label>
+                                <input type="password" class="form-control" id="cnfpwd" name="cnfpwd" placeholder="Confirm your password" required>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

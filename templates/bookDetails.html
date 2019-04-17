@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href=" {{ url_for('index') }} ">Book Review</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <span class="navbar-text" id="navText">Hi, {{ fname }}</span>
+                <a class="nav-item nav-link" href=" {{ url_for('index') }} ">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" target="_blank" href="https://snehil10.github.io/">About</a>
+                <a class="nav-item nav-link" href=" {{ url_for('logout') }} ">Log Out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container content">
+    <div class="row jumbotron">
+        <div class="col-md-8 mx-auto">
+            <h2>Book Details</h2>
+            <div class="sub-content row">
+                <div class="container">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>ISBN</td>
+                                <td>{{ book.isbn }}</td>
+                            </tr>
+                            <tr>
+                                <td>Title</td>
+                                <td>{{ book.title }}</td>
+                            </tr>
+                            <tr>
+                                <td>Author</td>
+                                <td>{{ book.author }}</td>
+                            </tr>
+                            <tr>
+                                <td>Publication Year</td>
+                                <td>{{ book.year }}</td>
+                            </tr>
+                            {% if goodreads['books'] is defined %}
+                            <tr>
+                                <td>No. of Ratings(Goodreads)</td>
+                                <td>{{ goodreads['books'][0].work_ratings_count }}</td>
+                            </tr>
+                            <tr>
+                                <td>No. of Reviews(Goodreads)</td>
+                                <td>{{ goodreads['books'][0].work_text_reviews_count }}</td>
+                            </tr>
+                            <tr>
+                                <td>Average Rating(Goodreads)</td>
+                                <td>{{ goodreads['books'][0].average_rating }}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+<div class="container">
+    {% if reviews.review is defined and editable == 0 %}
+    <div class="row" id="read_reviews">
+        <div class="col-md-8 mx-auto">
+            <h2 class="row" id="review_heading">Your Review</h2>
+            <div class="row" id="review_emoticon">
+                <h4>emotions: </h4>
+                {% if reviews.rating == "1" %}
+                <i class="far fa-angry"></i>
+                {% elif reviews.rating == "2" %}
+                <i class="far fa-frown"></i>
+                {% elif reviews.rating == "3" %}
+                <i class="fas fa-meh"></i>
+                {% elif reviews.rating == "4" %}
+                <i class="fas fa-smile-beam"></i>
+                {% elif reviews.rating == "5" %}
+                <i class="fas fa-grin-stars"></i>
+                {% endif %}
+            </div>
+            <p class="row" id="review_text">{{ reviews.review }}</p>
+            <form action="{{ url_for('editReview', isbn=book.isbn) }}" method="POST">
+                <button type="submit" class="btn btn-primary">Edit Review</button>
+            </form>
+            <form action="{{ url_for('deleteReview', isbn=book.isbn) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Delete Review</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="row" id="write_reviews">
+        <div class="col-md-8 mx-auto">
+            <h2>Your Reviews:</h2>
+            <p><em>Read the book yet? Write review for it once you are done</em></p>
+            <form action="{{ url_for('writeReview', isbn=book.isbn) }}" method="POST">
+                <div class="form-group row">
+                    <div class="col-md-5">
+                        <label for="search" class="mr-sm-2">How much did you like the book?</label>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="rating" value="1" {% if reviews.rating is not defined or reviews.rating == '1' %}checked="checked"{% endif %}><i class="far fa-angry"></i>
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="rating" value="2" {% if reviews.rating == '2' %}checked="checked"{% endif %}><i class="far fa-frown"></i>
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="rating" value="3" {% if reviews.rating == '3' %}checked="checked"{% endif %}><i class="fas fa-meh"></i>
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="rating" value="4"{% if reviews.rating == '4' %}checked="checked"{% endif %}><i class="fas fa-smile-beam"></i>
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="rating" value="5"{% if reviews.rating == '5' %}checked="checked"{% endif %}><i class="fas fa-grin-stars"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="review">Review:</label>
+                    <textarea class="form-control" rows="5" id="review" name="review">{% if reviews.review is defined %}{{reviews.review}}{% endif %}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

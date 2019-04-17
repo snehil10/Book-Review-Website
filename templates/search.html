@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href=" {{ url_for('index') }} ">Book Review</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <span class="navbar-text" id="navText">Hi, {{ fname }}</span>
+                <a class="nav-item nav-link" href=" {{ url_for('index') }} ">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="https://snehil10.github.io/">About</a>
+                <a class="nav-item nav-link" target="_blank" href=" {{ url_for('logout') }} ">Log Out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container content">
+    <div class="search_content">
+        <div class="row">
+            <h2 id="search_text">Search for your favorite books</h2>
+        </div>
+        <form action="{{ url_for('searchBooks') }}" method="POST">
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label for="searchText" class="mr-sm-2">Search Term:</label>
+                </div>
+                <div class="col-md-8">    
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="searchText" name="searchText" {% if searchText is defined %}value = {{searchText}} {% endif %}>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary mb-2">Search</button>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <label for="search" class="mr-sm-2">Search for:</label>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="selector" value="title"
+                                   {%if radio is not defined or radio == 'title'%}checked="checked"{% endif %}>Title
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="selector" value="isbn"
+                                   {%if radio is defined and radio == 'isbn'%}checked="checked"{% endif %}>ISBN
+                        </label>
+                    </div>
+                    <div class="form-check-inline disabled">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="selector" value="author"
+                                   {%if radio is defined and radio == 'author'%}checked="checked"{% endif %}>Author
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>  
+    </div>    
+</div>
+
+{% if books is defined and lenArr == 0 %}
+<div class="container">
+    <div class="alert alert-danger" style="margin-bottom: 70px;">
+        <strong>Sorry!</strong> We could not find any book for the given search request.
+    </div>
+</div>
+{% elif books is defined %}
+<div class="container">
+    <div class="alert alert-success">
+        <strong>Success!</strong> We found {{ lenArr }} books matching your request.
+    </div>
+</div>
+<div class="container" id="tableData">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Book Page</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book, no in books %}
+                <tr>
+                    <th scope="row">{{ no }}</th>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <form action="{{ url_for('renderBook', isbn=book.isbn, editable=0 ) }}" method="GET">
+                        <td><button type="submit" class="btn btn-primary">View Book</button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
